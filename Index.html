@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mama's Charcuterie - Digital Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8c2d4 0%, #e8a5c0 50%, #d888a6 100%);
+            color: #2d1b2b;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M5 15 Q 20 5, 35 15 T 65 15 T 95 15' stroke='%23228B22' stroke-width='2' fill='none'/%3E%3Cpath d='M8 18 Q 12 12, 18 18 Q 22 12, 28 18' stroke='%23228B22' stroke-width='1.5' fill='none'/%3E%3Cpath d='M70 18 Q 74 12, 80 18 Q 84 12, 90 18' stroke='%23228B22' stroke-width='1.5' fill='none'/%3E%3Ccircle cx='15' cy='12' r='2' fill='%23FF69B4'/%3E%3Ccircle cx='45' cy='10' r='2' fill='%23FF1493'/%3E%3Ccircle cx='75' cy='12' r='2' fill='%23FF69B4'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M5 85 Q 20 95, 35 85 T 65 85 T 95 85' stroke='%23228B22' stroke-width='2' fill='none'/%3E%3Cpath d='M8 82 Q 12 88, 18 82 Q 22 88, 28 82' stroke='%23228B22' stroke-width='1.5' fill='none'/%3E%3Cpath d='M70 82 Q 74 88, 80 82 Q 84 88, 90 82' stroke='%23228B22' stroke-width='1.5' fill='none'/%3E%3Ccircle cx='15' cy='88' r='2' fill='%23FF69B4'/%3E%3Ccircle cx='45' cy='90' r='2' fill='%23FF1493'/%3E%3Ccircle cx='75' cy='88' r='2' fill='%23FF69B4'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M15 5 Q 5 20, 15 35 T 15 65 T 15 95' stroke='%23228B22' stroke-width='2' fill='none'/%3E%3Cpath d='M18 8 Q 12 12, 18 18 Q 12 22, 18 28' stroke='%23228B22' stroke-width='1.5' fill='none'/%3E%3Cpath d='M18 70 Q 12 74, 18 80 Q 12 84, 18 90' stroke='%23228B22' stroke-width='1.5' fill='none'/%3E%3Ccircle cx='12' cy='15' r='2' fill='%23FF69B4'/%3E%3Ccircle cx='10' cy='45' r='2' fill='%23FF1493'/%3E%3Ccircle cx='12' cy='75' r='2' fill='%23FF69B4'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M85 5 Q 95 20, 85 35 T 85 65 T 85 95' stroke='%23228B22' stroke-width='2' fill='none'/%3E%3Cpath d='M82 8 Q 88 12, 82 18 Q 88 22, 82 28' stroke='%23228B22' stroke-width='1.5' fill='none'/%3E%3Cpath d='M82 70 Q 88 74, 82 80 Q 88 84, 82 90' stroke='%23228B22' stroke-width='1.5' fill='none'/%3E%3Ccircle cx='88' cy='15' r='2' fill='%23FF69B4'/%3E%3Ccircle cx='90' cy='45' r='2' fill='%23FF1493'/%3E%3Ccircle cx='88' cy='75' r='2' fill='%23FF69B4'/%3E%3C/svg%3E");
+            background-position: 
+                top center,
+                bottom center,
+                left center,
+                right center;
+            background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+            background-size: 200px 80px, 200px 80px, 80px 200px, 80px 200px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 40px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #8B4B6B;
+        }
+
+        .restaurant-name {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #8B4B6B;
+            text-shadow: 2px 2px 4px rgba(139, 75, 107, 0.3);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: #6B4B5B;
+            font-style: italic;
+        }
+
+        .menu-container {
+            flex: 1;
+            display: grid;
+            gap: 50px;
+        }
+
+        .loading {
+            text-align: center;
+            font-size: 2rem;
+            color: #6B4B5B;
+            padding: 100px;
+        }
+
+        .category-section {
+            margin-bottom: 40px;
+        }
+
+        .category-title {
+            font-size: 3rem;
+            color: #8B4B6B;
+            text-align: center;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+        }
+
+        .category-title::after {
+            content: '';
+            display: block;
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent 0%, #8B4B6B 50%, transparent 100%);
+            margin: 15px auto;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(139, 75, 107, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            gap: 25px;
+            min-height: 200px;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(139, 75, 107, 0.4);
+        }
+
+        .item-image {
+            flex-shrink: 0;
+            width: 150px;
+            height: 150px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #8B4B6B, #B86B8B);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .item-name {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2d1b2b;
+            line-height: 1.2;
+        }
+
+        .item-price {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #8B4B6B;
+            margin-left: 20px;
+        }
+
+        .item-description {
+            font-size: 1.3rem;
+            color: #4a3a4a;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .item-calories {
+            font-size: 1.1rem;
+            color: #6B4B5B;
+            align-self: flex-end;
+            background: rgba(139, 75, 107, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(139, 75, 107, 0.3);
+            color: #6B4B5B;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .items-grid {
+                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            }
+            
+            .restaurant-name {
+                font-size: 3rem;
+            }
+            
+            .category-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .menu-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .item-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .item-image {
+                align-self: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="restaurant-name">Mama's Charcuterie</h1>
+            <p class="tagline">Artisan • Fresh • Handcrafted</p>
+        </header>
+        
+        <main class="menu-container" id="menuContainer">
+            <div class="loading">Loading menu...</div>
+        </main>
+        
+        <footer class="footer">
+            <p>All prices include tax • Nutritional information is approximate</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Sample menu data - in a real setup, this would come from menu.json
+        const sampleMenuData = [
+            {
+                "name": "Artisan Cheese Board",
+                "price": 24.99,
+                "calories": 450,
+                "description": "Selection of aged cheeses with crackers, honey, and seasonal fruits",
+                "category": "Cheese Boards"
+            },
+            {
+                "name": "Classic Charcuterie Board",
+                "price": 28.99,
+                "calories": 680,
+                "description": "Cured meats, artisan cheeses, olives, nuts, and fresh bread",
+                "category": "Charcuterie Boards"
+            },
+            {
+                "name": "Prosciutto & Fig",
+                "price": 32.99,
+                "calories": 520,
+                "description": "Premium prosciutto with fresh figs, goat cheese, and arugula",
+                "category": "Charcuterie Boards"
+            },
+            {
+                "name": "Wine Pairing Selection",
+                "price": 45.99,
+                "calories": 350,
+                "description": "Curated selection of cheeses and meats paired with local wines",
+                "category": "Wine Pairings"
+            },
+            {
+                "name": "Mama's Special Board",
+                "price": 38.99,
+                "calories": 750,
+                "description": "Our signature board with the finest meats, cheeses, and accompaniments",
+                "category": "Signature Boards"
+            },
+            {
+                "name": "Vegetarian Delight",
+                "price": 22.99,
+                "calories": 380,
+                "description": "Plant-based selection with hummus, vegetables, nuts, and artisan breads",
+                "category": "Vegetarian Options"
+            }
+        ];
+
+        class DigitalMenu {
+            constructor() {
+                this.menuContainer = document.getElementById('menuContainer');
+                this.menuData = [];
+                this.init();
+            }
+
+            async init() {
+                try {
+                    // Try to load from menu.json first, fallback to sample data
+                    await this.loadMenu();
+                    this.renderMenu();
+                } catch (error) {
+                    console.log('Using sample data:', error);
+                    this.menuData = sampleMenuData;
+                    this.renderMenu();
+                }
+            }
+
+            async loadMenu() {
+                try {
+                    const response = await fetch('menu.json');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    this.menuData = await response.json();
+                } catch (error) {
+                    throw new Error('Failed to load menu.json, using sample data');
+                }
+            }
+
+            renderMenu() {
+                if (!this.menuData || this.menuData.length === 0) {
+                    this.showError('No menu items found');
+                    return;
+                }
+
+                // Group items by category
+                const categories = this.groupByCategory(this.menuData);
+                
+                // Clear loading message
+                this.menuContainer.innerHTML = '';
+                
+                // Render each category
+                Object.keys(categories).forEach(category => {
+                    const categorySection = this.createCategorySection(category, categories[category]);
+                    this.menuContainer.appendChild(categorySection);
+                });
+            }
+
+            groupByCategory(items) {
+                return items.reduce((groups, item) => {
+                    const category = item.category || 'Other';
+                    if (!groups[category]) {
+                        groups[category] = [];
+                    }
+                    groups[category].push(item);
+                    return groups;
+                }, {});
+            }
+
+            createCategorySection(categoryName, items) {
+                const section = document.createElement('section');
+                section.className = 'category-section';
+
+                const title = document.createElement('h2');
+                title.className = 'category-title';
+                title.textContent = categoryName;
+
+                const itemsGrid = document.createElement('div');
+                itemsGrid.className = 'items-grid';
+
+                items.forEach(item => {
+                    const itemElement = this.createMenuItem(item);
+                    itemsGrid.appendChild(itemElement);
+                });
+
+                section.appendChild(title);
+                section.appendChild(itemsGrid);
+                
+                return section;
+            }
+
+            createMenuItem(item) {
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'item-image';
+
+                if (item.image) {
+                    const img = document.createElement('img');
+                    img.src = item.image;
+                    img.alt = item.name;
+                    img.onerror = () => {
+                        imageDiv.innerHTML = '<div>No Image</div>';
+                    };
+                    imageDiv.appendChild(img);
+                } else {
+                    imageDiv.innerHTML = '<div>🧀</div>';
+                }
+
+                const itemDetails = document.createElement('div');
+                itemDetails.className = 'item-details';
+
+                const itemHeader = document.createElement('div');
+                itemHeader.className = 'item-header';
+
+                const itemName = document.createElement('h3');
+                itemName.className = 'item-name';
+                itemName.textContent = item.name || 'Unnamed Item';
+
+                const itemPrice = document.createElement('div');
+                itemPrice.className = 'item-price';
+                itemPrice.textContent = item.price ? `$${parseFloat(item.price).toFixed(2)}` : 'Price N/A';
+
+                itemHeader.appendChild(itemName);
+                itemHeader.appendChild(itemPrice);
+
+                const itemDescription = document.createElement('p');
+                itemDescription.className = 'item-description';
+                itemDescription.textContent = item.description || 'No description available';
+
+                const itemCalories = document.createElement('div');
+                itemCalories.className = 'item-calories';
+                itemCalories.textContent = item.calories ? `${item.calories} cal` : '';
+
+                itemDetails.appendChild(itemHeader);
+                itemDetails.appendChild(itemDescription);
+                if (item.calories) {
+                    itemDetails.appendChild(itemCalories);
+                }
+
+                menuItem.appendChild(imageDiv);
+                menuItem.appendChild(itemDetails);
+
+                return menuItem;
+            }
+
+            showError(message = 'Failed to load menu. Please try again later.') {
+                this.menuContainer.innerHTML = `
+                    <div class="loading" style="color: #8B4B6B;">
+                        ${message}
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize the menu when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new DigitalMenu();
+        });
+    </script>
+</body>
+</html>
