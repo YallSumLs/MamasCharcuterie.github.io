@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Cheese Charcuterie Board",
+    "price": 24.99,
+    "calories": 450,
+    "description": "Selection of aged cheeses with crackers, and seasonal fruits",
+    "image": "images/cheese-board.jpg",
+    "category": "Charcuterie Boards"
+  },
+  {
+    "name": "Classic Charcuterie Board",
+    "price": 28.99,
+    "calories": 680,
+    "description": "Cured meats, cheeses, olives, nuts, and fresh bread",
+    "image": "images/charcuterie-board.jpg",
+    "category": "Charcuterie Boards"
+  },
+  {
+    "name": "Mama's Special Board",
+    "price": 38.99,
+    "calories": 750,
+    "description": "Our signature board with the finest meats, cheeses, and accompaniments",
+    "image": "images/mamas-special.jpg",
+    "category": "Signature Boards"
+  },
+  {
+    "name": "Individual Cheese Plate",
+    "price": 12.99,
+    "calories": 280,
+    "description": "Personal portion of artisan cheeses with crackers and accompaniments",
+    "image": "images/cheese-plate.jpg",
+    "category": "Individual Plates"
+  },
+  {
+    "name": "Meat Lover's Plate",
+    "price": 16.99,
+    "calories": 450,
+    "description": "Selection of cured meats with mustard, pickles, and bread",
+    "image": "images/meat-plate.jpg",
+    "category": "Individual Plates"
+  },
+]
